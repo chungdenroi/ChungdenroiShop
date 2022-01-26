@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="admin/_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Category List</title>
+</head>
+<body>
+    <div class="container-xxl">
+        <div class="content" layout:fragment="content-admin">
+            <div class="header-admin">
+                <h6>CATEGORY</h6>
+                <div class="toolbar">
+                    <select class="form-select-sm" id="sortby">
+                        <option value="" selected>Sort</option>
+                        <option value="asc" >Asc</option>
+                        <option value="desc" >Desc</option>
+                    </select>
+                    <div class="search-admin">
+                        <form th:action="@{search}" method="get" class="form-group">
+                            <input type="search" placeholder="Search..." class="form-control" name="name">
+                        </form>
+                    </div>
+                    <a th:href="'add'"><button class="button-primary">Add   <i class="ti-plus" style="font-size: 18px;"></i></button></a>
+
+                </div>
+            </div>
+            <div class="data">
+                <div class="category">
+                    <table id="category-table" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Url</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="category : ${categorys}">
+                                <td th:text="${category.id}"/>
+                                <td >
+                                    <img th:src="@{'/../../images/categories/'+${category.image}}" width="100px"/>
+                                </td>
+                                <td th:text="${category.name}"/>
+                                <td th:text="${category.description}"/>
+                                <td th:text="${category.url}"/>
+
+                                <td>
+                                    <a th:href="'delete/'+${category.id}" onclick="return confirm('Do you want to delete?')"><i class="ti-trash"></i></a>
+                                    <a th:href="'update/'+${category.id}"><i class="ti-marker-alt"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <i class="ti-layout-grid2-alt" id="btndashboard"></i>
+
+<!--            /*paging*/-->
+            <div layout:fragment="paging" class="pagination">
+                <p th:value="${pageTotal}" th:text="${pageTotal}" class="paging" style="display: none"></p>
+                <p th:text="${#httpServletRequest.getParameter('page')}" class="pagingCurent" style="display: none" ></p>
+            </div>
+        </div>
+
+    </div>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-showhidedashboard.js}"></script>
+
+
+
+</body>
+</html>

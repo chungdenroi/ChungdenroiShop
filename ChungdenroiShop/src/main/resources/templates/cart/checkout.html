@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:pth="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" layout:decorate="_layout" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/single-product.css}">
+  <link rel="stylesheet" th:href="@{/css/library.css}">
+  <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+  />
+  <title>Checkout</title>
+</head>
+<body class="container-xxl">
+<div layout:fragment="content" class="content">
+  <div class="checkout-content">
+    <h5>THANH TOÁN</h5>
+
+    <form th:action="@{/creatingOrder}" method="post" id="checkoutForm2">
+      <div class="checkout-info">
+        <div th:object="${customer}">
+          <input type="hidden" th:field="*{id}">
+          <fieldset class="form-group">
+            <label>Họ và tên</label>
+            <input class="form-control" type="text" required th:field="*{fullname}" id="ck_fullname2" minlength="2" maxlength="60">
+          </fieldset>
+          <fieldset class="form-group">
+            <label>Điện thoại</label>
+            <input class="form-control" type="number" name="mobilenumber" id="ck_mobilenumber2" required  th:field="*{mobilenumber}" minlength="10" maxlength="10">
+          </fieldset>
+          <fieldset class="form-group">
+            <label>Email</label>
+            <input class="form-control" type="email" required th:field="*{email}" id="ck_email2" minlength="10" maxlength="100">
+          </fieldset>
+          <fieldset class="form-group">
+            <label>Địa chỉ</label>
+            <input class="form-control" type="text" required th:field="*{address}" id="ck_address2" minlength="3" maxlength="100">
+          </fieldset>
+          <fieldset class="form-group">
+            <label>Lời nhắn</label>
+            <textarea name="message" class="form-control"></textarea>
+          </fieldset>
+          <fieldset class="form-group">
+            <label>Tạo tài khoản với thông tin này?</label>
+            <input class="form-check-inline" type="checkbox" name="doCreateAccount" value="yes">Đồng ý
+          </fieldset>
+        </div>
+      </div>
+      <div class="checkout-total">
+        <h5>SẢN PHẨM CỦA BẠN</h5>
+        <hr class="sg-product-name">
+        <div class="checkout-productlist">
+          <table>
+            <tr>
+              <th>SẢN PHẨM</th>
+              <th>SỐ LƯỢNG</th>
+              <th>TẠM TÍNH</th>
+            </tr>
+            <tr th:each="orderProduct : ${orderProducts}">
+              <td class="ck-product-col1">
+                <p><img th:src="@{'../../images/products/'+${orderProduct.product.image}}"/> <span th:text="${orderProduct.product.name}"/></p>
+                <!--                                    <input type="hidden" th:value="${product.id}" name="product_id"/>-->
+              </td>
+              <td>
+                <p th:text="${orderProduct.orderProductQuantity}"></p>
+                <input type="hidden" th:value="${orderProduct.orderProductQuantity}" name="order_product_quantity"/>
+              </td>
+              <td>
+                <input type="text" size="10" readonly th:value="${orderProduct.orderProductQuantity}*${orderProduct.product.price}" name="totalPriceProduct" th:id="'ck-totalPriceProduct'+${orderProductStat.index}" style="border: none"/>
+              </td>
+            </tr>
+          </table>
+          <hr>
+          <div class="ck-total">
+            <div>
+              <h6>TỔNG THANH TOÁN: </h6>
+            </div>
+            <div>
+              <p id="totalPyament"></p>
+            </div>
+          </div>
+          <hr>
+        </div>
+        <h6>PHƯƠNG THỨC THANH TOÁN</h6>
+        <div class="checkout-payment">
+          <input type="radio" name="payment" required th:value="'pay_on'"> Chuyển khoản ngân hàng
+          <br>
+          <input type="radio" name="payment" required th:value="'pay_off'"> Kiểm tra thanh toán
+        </div>
+        <hr>
+        <input type="button" class="button-primary" th:value="'ĐẶT HÀNG'" onclick="return checkOutValid2();">
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-showhidedashboard.js}"></script>
+
+</html>

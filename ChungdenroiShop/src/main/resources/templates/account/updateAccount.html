@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Thay đổi thông tin</title>
+</head>
+<body>
+<div layout:fragment="content" class="content">
+    <div layout:fragment="account-content" class="account-content">
+        <div class="account-sidebar" layout:fragment="account-sidebar">
+            <ul>
+                <li><a th:href="'/account'">Tài khoản</a> </li>
+                <li> <a th:href="'/account/order-history'">Lịch sử mua hàng</a> </li>
+                <li><a th:href="'/account/change'">Đổi thông tin tài khoản</a> </li>
+                <li><a th:href="'/logout'">Đăng xuất</a> </li>
+            </ul>
+        </div>
+        <div layout:fragment="account-body" class="account-body">
+            <!--                    <h2 th:text="'Xin chào' + ${username}"/>-->
+            <form th:action="@{'/account/'+save}" th:object="${customer}" class="account-update" method="post">
+                <input type="hidden" th:field="*{id}">
+                <table class="table table-borderless">
+                    <tr>
+                        <td>Họ và tên: </td>
+                        <td>
+                            <input type="text" th:field="*{fullname}" required minlength="2" maxlength="60" class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Số điện thoại: </td>
+                        <td>
+                            <input type="number" th:field="*{mobilenumber}" required minlength="10" maxlength="10" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email: </td>
+                        <td>
+                            <input type="email" th:field="*{email}"  minlength="10" maxlength="100" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Địa chỉ: </td>
+                        <td>
+                            <input type="text" th:field="*{address}" required minlength="5" maxlength="100" class="form-control" />
+                        </td>
+                    </tr>
+                </table>
+                <div>
+                    <button type="submit" class="button-primary">Lưu</button>
+                </div>
+            </form>
+            <!--                    <p th:text="${userAccount.username}"></p>-->
+        </div>
+
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/library.css}">
+
+  <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+  />
+  <title>Đổi thông tin tài khoản</title>
+</head>
+<body>
+<div layout:fragment="content" class="content">
+  <div layout:fragment="account-content" class="account-content">
+    <div class="account-sidebar" layout:fragment="account-sidebar">
+      <ul>
+        <li><a th:href="'/account'">Tài khoản</a> </li>
+        <li> <a th:href="'/account/order-history'">Lịch sử mua hàng</a> </li>
+        <li><a th:href="'/account/change'">Đổi thông tin tài khoản</a> </li>
+        <li><a th:href="'/logout'">Đăng xuất</a> </li>
+      </ul>
+    </div>
+    <div layout:fragment="account-body" class="account-body">
+      <form th:action="@{'/account/'+saveUser}" th:object="${userAccount}" class="account-update" method="post" id="form_change_user">
+        <input type="hidden" th:field="*{id}" name="id">
+        <table class="table table-borderless">
+          <tr>
+            <td>Tên đăng nhập: </td>
+            <td>
+              <input type="text" name="username" th:value="${userAccount.username}" id="new_username" required minlength="2" maxlength="60" class="form-control"/>
+            </td>
+          </tr>
+          <hr>
+          <tr>
+            <td>Mật khẩu mới: </td>
+            <td>
+              <input type="password" name="new_pass" id="newPass"  required minlength="5" maxlength="10" class="form-control" />
+            </td>
+          </tr>
+          <tr>
+            <td>Nhập lại mật khẩu: </td>
+            <td>
+              <input type="password"  name="repeat_new_pass" id="repeatPass"  required minlength="5" maxlength="10" class="form-control" />
+            </td>
+          </tr>
+        </table>
+        <p id="error_message_pass" style="display: none"></p>
+        <p id="error_message_user" th:text="${message}">OK</p>
+        <div>
+          <button type="submit" class="button-primary" id="btnUpdateUserAccount" onclick="return checkChangePass();">Lưu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--<script>-->
+<!--  alert("Hello");-->
+<!--  function checkChangePass() {-->
+<!--    var newPass = document.getElementById("newPass").innerHTML;-->
+<!--    var repeatPass = document.getElementById("repeatPass").innerHTML;-->
+<!--    alert(newPass);-->
+<!--    alert(repeatPass);-->
+<!--    if(newPass != repeatPass ) {-->
+<!--      alert("Mật khẩu bạn vừa nhợp chưa khớp nhau!")-->
+<!--      return;-->
+<!--    }-->
+<!--  }-->
+<!--</script>-->
+
+</body>
+</html>

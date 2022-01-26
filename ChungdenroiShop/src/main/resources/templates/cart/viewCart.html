@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:pth="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" layout:decorate="_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Giỏ hàng</title>
+</head>
+<body class="container-xxl">
+    <div layout:fragment="content" class="content">
+        <div class="cart-content">
+            <table class="table border-bottom" id="totalOrderItems">
+                <tr>
+                    <th>STT</th>
+                    <th>Sản phấm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Tổng tiền</th>
+                    <th>Chỉnh sửa</th>
+                </tr>
+                <tr th:each="orderProduct : ${#httpSession.getAttribute('cart')}">
+                    <td th:text="${orderProductStat.index}+1"></td>
+                    <td th:text="${orderProduct.product.name}"></td>
+                    <td th:text="${orderProduct.product.price}"></td>
+                    <td th:text="${orderProduct.orderProductQuantity}"></td>
+                    <td th:text="${orderProduct.totalPriceProduct}"></td>
+                    <td>
+                        <a th:href="'/cart/delete/'+${orderProductStat.index}"> <button class="btn btn-primary">Xóa</button></a>
+                    </td>
+                </tr>
+            </table>
+            <div><a th:href="'/cart/checkout'"><button class="button-primary">Đặt hàng</button> </a> </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-showhidedashboard.js}"></script>
+</html>

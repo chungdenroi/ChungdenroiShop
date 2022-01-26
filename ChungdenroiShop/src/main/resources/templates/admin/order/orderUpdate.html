@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="admin/_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!--    <link rel="stylesheet" th:href="@{/css/style.css}">-->
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Update Order</title>
+</head>
+<body>
+<div class="container-xxl">
+    <div class="content" layout:fragment="content-admin">
+        <div class="card-body">
+            <form th:action="@{/admin/order/saveUpdate}" th:object="${order}" method="post" id="orderAddForm">
+                <h2 class="text-center">UPDATE ORDER</h2>
+                <input type="hidden" th:field="*{id}"/>
+                <fieldset class="form-group">
+                    <label>Order name </label>
+                    <input class="form-control" type="text" required th:field="*{name}">
+                    <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Order total price </label>
+                    <input class="form-control" type="number" required th:field="*{totalPrice}" id="totalPrice"/>VND
+                    <p th:if="${#fields.hasErrors('totalPrice')}" th:errorclass="error" th:errors="*{totalPrice}" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Customer ID </label>
+                    <input class="form-control" type="number"  th:field="*{customer.id}" step="0.1">
+                    <p th:if="${#fields.hasErrors('customer.id')}" th:errorclass="error" th:errors="*{customer.id}" />
+                </fieldset>
+                <input type="hidden" th:field="*{orderDate}">
+                <fieldset class="form-group">
+                    <label>Order status </label>
+                    <select class="form-select" th:filed="*{status}" required name="orderStatus">
+                        <option th:value="'Pending'">Pending</option>
+                        <option th:value="'Canceled'">Canceled</option>
+                        <option th:value="'Paying'">Paying</option>
+                        <option th:value="'Successed'">Successed</option>
+                        <option th:value="'Processing'">Processing</option>
+                    </select>
+                </fieldset>
+
+                <div class="form-group" >
+                    <label>Product List</label>
+                    <table class="table border-bottom" id="table-orrderAdd">
+                        <tr>
+                            <th>Product name</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr th:each="orderProduct : ${orderProductsList}">
+                            <td id="selectProduct">
+<!--                                <input type="text" th:field="*{id}">-->
+                                <input type="hidden"  class="form-control"  th:value="${orderProduct.id}" name="orderProductID">
+                                <input type="text"  class="form-control"  th:value="${orderProduct.product.name}"  readonly>
+                                <input type="hidden"  class="form-control"  th:value="${orderProduct.product.id}" name="ProductID">
+                            </td>
+                            <td >
+                                <p th:text="${orderProduct.product.price}" th:id="'orderProductPrice'+${orderProductStat.index}" style="display: none"/>
+                                <input type="number" th:value="${orderProduct.orderProductQuantity}" name="product_quantity" required  th:id="'orderProductQuantity'+${orderProductStat.index}" class="form-control"/> <br>
+                            </td>
+                            <td >
+                                <input type="number" th:value="${orderProduct.totalPriceProduct}"  required readonly  th:id="'totalPriceProduct'+${orderProductStat.index}" class="form-control"/>VND <br>
+                            </td>
+                            <td id="actionOrderAdd">
+                                <a th:href="'removeProduct/'+${orderProduct.id}" th:id="'removeProduct'+${orderProductStat.index}"><button class="btn btn-danger" type="button" th:id="'btn_delete'+${orderProductStat.index}" onclick="return confirm('Are you sure want to delete this product?');"><i class="ti-close"></i></button></a>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <div>
+                        <button class="btn btn-success" type="button" id="btn_calTotal">Total Payment</button>
+
+                    </div>
+
+                </div>
+
+                <div class="col text-center mt-3">
+                    <button type="submit" class="btn btn-danger" >UPDATE</button>
+                    <button type="reset" class="btn btn-secondary">RESET</button>
+                </div>
+            </form>
+        </div>
+        <i class="ti-layout-grid2-alt" id="btndashboard"></i>
+    </div>
+
+</div>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-showhidedashboard.js}"></script>
+
+
+
+</body>
+</html>

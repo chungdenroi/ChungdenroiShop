@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="admin/_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"/>
+    <title>Add Category</title>
+</head>
+<body>
+    <div class="container-xxl">
+        <div class="content" layout:fragment="content-admin">
+            <div class="card-body">
+                <form th:action="@{saveAdd}" th:object="${category}" method="post" id="categoryAddForm" >
+                    <h2 class="text-center">ADD CATEGORY</h2>
+                    <p class="error" id="categoryAddEror" style="display: none; font-style: italic"></p>
+                    <fieldset class="form-group">
+                        <label>Category name </label>
+                        <input class="form-control" type="text" required th:field="*{name}" id="add_cat_name">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label>Category description </label>
+                        <input class="form-control" type="text" th:field="*{description}" >
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label>Category url </label>
+                        <input class="form-control" type="text" required th:field="*{url}" id="add_cat_url">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label>Category image </label>
+                        <input class="form-control" type="file" name="image" required th:field="*{image}" accept="image/*" id="add_cat_image">
+                    </fieldset>
+                    <div class="col text-center mt-3">
+                        <button type="button" class="btn btn-danger" onclick="return checkCategoryAddForm();">ADD</button>
+                        <button type="reset" class="btn btn-secondary">RESET</button>
+                    </div>
+                </form>
+                <p class="error" style="font-style: italic" th:text="${messageCat}"></p>
+            </div>
+            <i class="ti-layout-grid2-alt" id="btndashboard"></i>
+        </div>
+
+    </div>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-showhidedashboard.js}"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Thông tin đơn hàng</title>
+</head>
+<body>
+<div layout:fragment="content" class="content">
+    <div layout:fragment="account-content" class="account-content">
+        <div class="account-sidebar" layout:fragment="account-sidebar">
+            <ul>
+                <li><a th:href="'/account'">Tài khoản</a> </li>
+                <li> <a th:href="'/account/order-history'">Lịch sử mua hàng</a> </li>
+                <li><a th:href="'/account/change'">Đổi thông tin tài khoản</a> </li>
+                <li><a th:href="'/logout'">Đăng xuất</a> </li>
+            </ul>
+        </div>
+        <div layout:fragment="account-body" class="account-body" style="border: 1px dashed #ff8202; border-radius: 5px; padding: 2%;">
+            <!--                    <h2 th:text="'Xin chào' + ${username}"/>-->
+            <h4 th:text="${order.name}"></h4>
+            <hr class="sg-product-name">
+            <table class="table table-borderless">
+                <tr>
+                    <td>Họ và Tên:</td>
+                    <td th:text="${order.customer.fullname}"></td>
+                </tr>
+                <tr>
+                    <td>Điện thoại:</td>
+                    <td th:text="${order.customer.mobilenumber}"></td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td th:text="${order.customer.email}"></td>
+                </tr>
+                <tr>
+                    <td>Địa chỉ:</td>
+                    <td th:text="${orderDetail.deliveryAddress}"></td>
+                </tr>
+                <tr>
+                    <td>Tổng thanh toán:</td>
+                    <td><b th:text="${order.totalPrice}"></b>VNĐ</td>
+                </tr>
+                <tr>
+                    <td>Tình trạng:</td>
+                    <td >
+                        <p th:text="${order.status}" id="acc-view-detail-status"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Lời nhắn:</td>
+                    <td th:text="${orderDetail.message}"></td>
+                </tr>
+            </table>
+            <hr>
+            <div id="acc-view-orderDetail">
+                <table class="table border-bottom table-borderless">
+                    <tr>
+                        <th>STT</th>
+                        <th>Ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                    </tr>
+                    <tr th:each=" orderProduct: ${orderProducts}">
+                        <td th:text="${orderProductStat.index}+1"></td>
+                        <td><img th:src="@{'/../../images/products/'+${orderProduct.product.image}}"/></td>
+                        <td><p th:text="${orderProduct.product.name}"/></td>
+                        <td><p th:text="${orderProduct.orderProductQuantity}"/></td>
+                    </tr>
+
+                </table>
+            </div>
+            <a th:href="@{update+'/'+${orderDetail.order.id}}"><button class="btn btn-danger" id="acc-view-detail-btnEdit">CHỈNH SỬA</button></a>
+            <!--                    <p th:text="${userAccount.username}"></p>-->
+        </div>
+
+
+    </div>
+</div>
+
+</body>
+</html>

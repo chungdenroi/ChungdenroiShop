@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Thay đổi thông tin đơn hàng</title>
+</head>
+<body>
+<div layout:fragment="content" class="content">
+    <div layout:fragment="account-content" class="account-content">
+        <div class="account-sidebar" layout:fragment="account-sidebar">
+            <ul>
+                <li><a th:href="'/account'">Tài khoản</a> </li>
+                <li> <a th:href="'/account/order-history'">Lịch sử mua hàng</a> </li>
+                <li><a th:href="'/account/change'">Đổi thông tin tài khoản</a> </li>
+                <li><a th:href="'/logout'">Đăng xuất</a> </li>
+            </ul>
+        </div>
+        <div layout:fragment="account-body" class="account-body">
+            <!--                    <h2 th:text="'Xin chào' + ${username}"/>-->
+            <form th:action="@{saveUpdateDetail}" th:object="${orderDetail}" method="post">
+                <input type="hidden" th:field="*{id}"/>
+                <input type="hidden" th:field="*{order}"/>
+                <div th:object="${order}">
+                    <fieldset class="form-group">
+                        <label>Mã đơn hàng </label>
+                        <input class="form-control" type="text"  th:value="${order.id}" name="orderID" readonly>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label>Tổng thanh toán </label>
+                        <input class="form-control" type="number" required th:value="${order.totalPrice}" name="acc-orderTotalPrice" id="acc-totalPrice"/>VND
+                    </fieldset>
+                </div>
+                <fieldset class="form-group">
+                    <label>Địa chỉ giao hàng </label>
+                    <input class="form-control" type="text" required th:field="*{deliveryAddress}"/>
+                    <p th:if="${#fields.hasErrors('deliveryAddress')}" th:errorclass="error" th:errors="*{deliveryAddress}" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Email </label>
+                    <input class="form-control" type="text" th:field="*{email}">
+                    <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Điện thoại </label>
+                    <input class="form-control" type="text" th:field="*{mobilenumber}">
+                    <p th:if="${#fields.hasErrors('mobilenumber')}" th:errorclass="error" th:errors="*{mobilenumber}" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Lời nhắn </label>
+                    <input class="form-control" type="text" th:field="*{message}" >
+                </fieldset>
+
+                <div class="form-group" >
+                    <label>Danh sách sản phẩm</label>
+                    <table class="table border-bottom" id="acc-table-orrderAdd">
+                        <tr>
+                            <th>Tên sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Tổng tiền sản phẩm</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        <tr th:each="orderProduct : ${orderProductsList}">
+                            <td id="acc-selectProduct">
+                                <!--                                <input type="text" th:field="*{id}">-->
+                                <input type="hidden"  class="form-control"  th:value="${orderProduct.id}" name="orderProductID">
+                                <input type="text"  class="form-control"  th:value="${orderProduct.product.name}"  readonly>
+                                <input type="hidden"  class="form-control"  th:value="${orderProduct.product.id}" name="ProductID">
+                            </td>
+                            <td >
+                                <p th:text="${orderProduct.product.price}" th:id="'acc-orderProductPrice'+${orderProductStat.index}" style="display: none"/>
+                                <input type="number" th:value="${orderProduct.orderProductQuantity}" name="product_quantity" required  th:id="'acc-orderProductQuantity'+${orderProductStat.index}" class="form-control"/> <br>
+                            </td>
+                            <td >
+                                <input type="number" th:value="${orderProduct.totalPriceProduct}"  required readonly  th:id="'acc-totalPriceProduct'+${orderProductStat.index}" class="form-control"/>VND <br>
+                            </td>
+                            <td id="actionOrderAdd">
+                                <a th:href="'/account/order-detail/removeProduct/'+${orderProduct.id}" ><button class="btn btn-danger" type="button" th:id="'acc-btn_delete'+${orderProductStat.index}" onclick="return confirm('Are you sure want to delete this product?');"><i class="ti-close"></i></button></a>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <div>
+                        <button class="btn btn-success" type="button" id="acc-btn_calTotal">Total Payment</button>
+
+                    </div>
+
+                </div>
+
+                <div class="col text-center mt-3">
+                    <button type="submit" class="btn btn-danger" >LƯU</button>
+                    <button type="reset" class="btn btn-secondary">LÀM MỚI</button>
+                </div>
+            </form>
+            <!--                    <p th:text="${userAccount.username}"></p>-->
+        </div>
+
+
+    </div>
+</div>
+</body>
+</html>

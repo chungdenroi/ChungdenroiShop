@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:pth="http://www.w3.org/1999/html" layout:decorate="_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Sản phẩm</title>
+</head>
+<body class = "container-xxl">
+
+    <div layout:fragment="content" class="content">
+        <div class="single-product">
+            <div class="single-product-sidebar">
+                <h6>SẢN PHẨM BÁN CHẠY</h6>
+                <hr class="sg-product-name">
+                <div class="single-product-sidebar-best" th:each="productD : ${bestSale}">
+                    <div>
+                        <a th:href="'/'+${productD.url}" ><img th:src="@{'/../../images/products/'+${productD.product.image}}"></a>
+                    </div>
+                    <div>
+                        <p th:text="${productD.product.name}">
+<!--                        <p th:text="${productDetail.size}">-->
+                        <p th:text="${productD.product.price}"/>VND
+                    </div>
+                </div>
+            </div>
+            <div class="single-product-content">
+                <div class="single-product-content-row1">
+                    <div class="single-product-content-img">
+                        <img th:src="@{'../../images/products/'+${product.image}}">
+                    </div>
+                    <div class="single-product-content-info">
+                        <form method="post" th:action="@{/cart}" id="formCheckout">
+                            <h4 th:text="${product.name}"/>
+                            <hr class="sg-product-name">
+                            <p>Kích thước: <span id="sg-product-size" th:text="${productDetail.size}"></span></p>
+                            <hr>
+                            <p>Thương hiệu: <b th:text="${productDetail.brand}"/></p>
+                            <hr>
+                            <p id="sg-product-id">Mã sản phẩm: <span th:text="${product.id}"/></p>
+                            <hr>
+                            <p id="sg-product-category">Danh mục: <a th:href="@{'/category/'+${product.category.url}}"><span th:text="${product.category.name}"/></a></p>
+                            <hr>
+                            <p>Còn: <span th:text="${productDetail.quantity}" id="sg-product-quantity"></span> </p>
+                            <hr>
+                            <h5><span id="sg-product-price" th:text="${product.price}"/> VND</h5>
+                            <input type="number" id="choose-product-quantity" name="product_quantity" value="1" size="5" min="1" maxlength="100" style="width: 50px"/>
+                            <input type="hidden"  name="product_id" th:value="${product.id}"  />
+                            <button type="submit" class="button-primary" id="btnAddToCart">Thêm vào giỏ hàng</button>
+                            <p style="margin:5% 5% 5% 0;"/>
+                            <a th:href="@{checkout}"><button type="submit" class="button-outline" id="btnMuaNgay">Mua ngay</button></a>
+                        </form>
+
+
+
+
+                    </div>
+                </div>
+                <hr>
+                <div class="single-product-content-row2">
+                    <div>
+                        <h6>MÔ TẢ</h6>
+                        <p th:text="${productDetail.description}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-showhidedashboard.js}"></script>
+<!--<script>-->
+<!--    $('#button1').click(function(){-->
+<!--        $('#formId').attr('action', 'page1');-->
+<!--    });-->
+
+
+<!--    $('#button2').click(function(){-->
+<!--        $('#formId').attr('action', 'page2');-->
+<!--    });-->
+<!--</script>-->
+</body>
+</html>

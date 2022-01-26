@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Lịch sử đặt hàng</title>
+</head>
+<body>
+<div layout:fragment="content" class="content">
+    <div layout:fragment="account-content" class="account-content">
+        <div class="account-sidebar" layout:fragment="account-sidebar">
+            <ul>
+                <li><a th:href="'/account'">Tài khoản</a> </li>
+                <li> <a th:href="'/account/order-history'">Lịch sử mua hàng</a> </li>
+                <li><a th:href="'/account/change'">Đổi thông tin tài khoản</a> </li>
+                <li><a th:href="'/logout'">Đăng xuất</a> </li>
+            </ul>
+        </div>
+        <div layout:fragment="account-body" class="account-body">
+            <!--                    <h2 th:text="'Xin chào' + ${username}"/>-->
+            <table class="table table-hover border-bottom" id="acc-table-orderList">
+                <tr>
+                    <th>STT</th>
+                    <th>Mã đơn hàng</th>
+                    <th>Ngày đặt</th>
+                    <th>Tên đơn hàng</th>
+<!--                    <ht>Email</ht>-->
+<!--                    <th>Số điện thoại</th>-->
+<!--                    <th>Địa chỉ</th>-->
+                    <th>Tổng thanh toán</th>
+                    <th>Trạng thái</th>
+                    <th>Chỉnh sửa</th>
+<!--                    <th>Thông tin sản phẩm</th>-->
+                </tr>
+                <tr th:each=" order : ${ordersList}" th:id="'acc-row'+${orderStat.index}">
+                    <td th:text="${orderStat.index}+1"></td>
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.orderDate}"></td>
+                    <td th:text="${order.name}"></td>
+                    <td>
+                        <p><span  th:text="${order.totalPrice}"></span> VND</p>
+                    </td>
+                    <td>
+                        <button th:id="'acc-order-status'+${orderStat.index}" th:text="${order.status}" style="border: none;color: white;border-radius: 4px;padding: 4%;background-color: #1f9817"/>
+                    </td>
+                    <td th:id="'acc-action'+${orderStat.index}" >
+                        <a th:href="'/account/order-detail/'+${order.id}"> <button class="btn btn-danger" style="margin-right: 2%">XEM</button></a>
+                        <a th:href="'/account/order-history/cancel/'+${order.id}" ><button th:id="'cancel-order'+${orderStat.index}" onclick="return confirm('Bạn có chắc chắn hủy?');" class="btn btn-dark">HỦY</button></a>
+<!--                        <button class="btn btn-primary">SỬA</button>-->
+                    </td>
+                </tr>
+            </table>
+
+            <!--                    <p th:text="${userAccount.username}"></p>-->
+        </div>
+        <div class="pagination">
+            <p th:value="${pageTotal}" th:text="${pageTotal}" class="paging" style="display: none"></p>
+            <p th:text="${#httpServletRequest.getParameter('page')}" class="pagingCurent" style="display: none" ></p>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

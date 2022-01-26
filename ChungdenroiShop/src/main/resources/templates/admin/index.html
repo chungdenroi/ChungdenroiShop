@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="admin/_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Shop Management</title>
+</head>
+<body>
+<div class="container-xxl">
+    <div class="content" layout:fragment="content-admin">
+        <div class="header-admin">
+            <h5>SHOP MANAGEMENT</h5>
+
+        </div>
+
+        <div class="data">
+            <div class="data-col1">
+                <h6>Total Orders Today</h6>
+                <hr class="sg-product-name">
+                <p th:text="${totalOrder}"></p>
+                <hr>
+                <h6>Total Successed Orders
+                </h6>
+                <hr class="sg-product-name">
+                <p th:text="${Successed}"></p>
+                <hr>
+                <h6>Total Orders Processing</h6>
+                <hr class="sg-product-name">
+                <p th:text="${Processing}"></p>
+                <hr>
+                <h6>Total Order Pending Payment
+                </h6>
+                <hr class="sg-product-name">
+                <p th:text="${Paying}"></p>
+                <hr>
+                <h6>Total Order Canceled
+                </h6>
+                <hr class="sg-product-name">
+                <p th:text="${Canceled}"></p>
+                <hr>
+            </div>
+            <div class="data-col2">
+                <div>
+                    <div>
+                        <h6>MONTHLY REVENUE <span th:text="${#request.getParameter('year')}"></span> </h6>
+                        <hr class="sg-product-name">
+
+                    </div>
+                    <div>
+                        <form class="form-group" th:action="@{/admin}">
+                            <input type="number" required min="2020" th:max="${year}" name="year" th:value="${year}"  class="form-control">
+                            <button type="submit" class="button-primary">View</button>
+                        </form>
+                    </div>
+                </div>
+                <table class="table border-bottom table-hover">
+                    <tr>
+                        <th>Month</th>
+<!--                        <th>Total Orders</th>-->
+                        <th>Revenue</th>
+                    </tr>
+                    <tr th:each="month : ${monthRevenue}" th:id="'row_month_revenue'+${monthStat.index}" th:if="${month}!=0">
+                        <td th:text="${monthStat.index+1}"></td>
+                        <td><p th:id="'month_revenue'+${monthStat.index}"><span th:text="${month}"></span> VND</p></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <i class="ti-layout-grid2-alt" id="btndashboard"></i>
+    </div>
+
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-showhidedashboard.js}"></script>
+
+    <!-- <script src="../../static/js/bootstrap.bundle.min.js"></script> -->
+    <!--<script src="../../static/js/jquery-3.6.0.min.js"></script>-->
+<!--    <script>-->
+<!--        $(".dashboard").hide();-->
+<!--        $(".content").css("width","100%");-->
+<!--        $("#btndashboard").show();-->
+<!--        $("#btnclose").hide();-->
+
+<!--        $("#btnclose").click(function () {-->
+<!--            $(this).visibility = "hidden";-->
+<!--            $(".dashboard").hide();-->
+<!--            $(".content").css("width","100%");-->
+<!--            $("#btndashboard").show();-->
+<!--        });-->
+<!--        $("#btndashboard").click(function () {-->
+<!--            $(this).hide();-->
+<!--            $(".dashboard").show();-->
+<!--            $(".content").css("width","89.85%");-->
+<!--            $("#btnclose").show();-->
+
+<!--        })-->
+
+<!--    </script>-->
+</div>
+</body>
+</html>

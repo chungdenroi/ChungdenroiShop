@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+</head>
+<body class="container-xxl">
+    <div layout:fragment="dashboard" class="dashboard">
+        <i class="ti-close" id="btnclose"></i>
+        <div class="logo-admin">
+            <a href="/"> <img src="https://chungdenroi.website/wp-content/uploads/2021/04/logo.png" title="Chungdenroi"></a>
+        </div>
+        <hr>
+        <div class="menu-admin">
+            <ul>
+                <!--            ${#httpServletRequest.getServletPath()}-->
+                <li><a th:href="'/admin/'"><i class="ti-home" title="Home"></i></a></li>
+                <li><a th:href="'/admin/category/'"><i class="ti-list" title="Categories"></i></a></li>
+                <li><a th:href="'/admin/product/'"><i class="ti-package" title="Products"></i></a></li>
+                <li><a th:href="'/admin/order/'"><i class="ti-shopping-cart-full" title="Orders"></i></a></li>
+                <li><a th:href="'/admin/customer/'"><i class="ti-user" title="Customer"></i></a></li>
+
+                <li><a th:href="'/admin/user/'"><i class="ti-settings" title="Setting"></i></a></li>
+            </ul>
+        </div>
+        <hr>
+        <div class="footer-dashboard">
+            <ul>
+                <li><a href="/logout"><i class="ti-back-left" title="Logout"></i></a></li>
+                <li><p>Hi, <span th:text="${session.username}"></span></p></li>
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div layout:fragment="content" >
+        <div layout:fragment="content-admin" class="content"></div>
+        <div layout:fragment="paging">
+
+        </div>
+    </div>
+    <div layout:fragment="footer-admin" class="footer-admin">
+        <center>
+            <p>copyright @<b>Chungdenroi</b></p>
+        </center>
+    </div>
+
+
+
+
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-showhidedashboard.js}"></script>
+    <script>
+        function checkCategoryAddForm() {
+            let add_category_name = $("#add_cat_name").val();
+            let add_cat_image = $("#add_cat_image").val();
+            let add_cat_url = $("#add_cat_url").val();
+            if(add_category_name.length < 2 || add_category_name.length > 60) {
+                $("#categoryAddEror").show();
+                $("#categoryAddEror").text("Category name invalid");
+            } else if(add_cat_url.length < 2 || add_cat_url.length > 255){
+                $("#categoryAddEror").show();
+                $("#categoryAddEror").text("Url invalid");
+            } else if(add_cat_image .length < 2) {
+                $("#categoryAddEror").show();
+                $("#categoryAddEror").text("Image invalid");
+            } else {
+                $("#categoryAddForm").submit();
+            }
+        }
+
+        function checkCategoryUpdateForm() {
+            let up_cat_name = $("#up_cat_name").val();
+            let up_cat_image = $("#up_cat_image").val();
+            let up_cat_url = $("#up_cat_url").val();
+            if(up_cat_name.length < 2 || up_cat_name.length > 60) {
+                $("#categoryUpError").show();
+                $("#categoryUpError").text("Category name invalid");
+            } else if(up_cat_url.length < 2 || up_cat_url.length > 255){
+                $("#categoryUpError").show();
+                $("#categoryUpError").text("Url invalid");
+            } else if(up_cat_image .length < 2) {
+                $("#categoryUpError").show();
+                $("#categoryUpError").text("Image invalid");
+            } else {
+                $("#categoryUpdateForm").submit();
+            }
+        }
+        function checkAddProductForm() {
+            let add_pd_name = $("#add_pd_name").val();
+            let add_pd_price = $("#add_pd_price").val();
+            let add_pd_image = $("#add_pd_image").val();
+            let add_pd_size = $("#add_pd_size").val();
+            let add_pd_quantity = $("#add_pd_quantity").val();
+            let add_pd_url = $("#add_pd_url").val();
+            if(add_pd_name.length < 2 || add_pd_name.length > 255) {
+                $("#addProductError").show();
+                $("#addProductError").text("Product name invalid!");
+            } else if(parseFloat(add_pd_price) < 0 || parseFloat(add_pd_price) > 1000000000) {
+                $("#addProductError").show();
+                $("#addProductError").text("Product price invalid!");
+            } else if(parseInt(add_pd_quantity) < 1) {
+                $("#addProductError").show();
+                $("#addProductError").text("Product quantity can not less than 1!");
+            } else if(add_pd_image.length < 2) {
+                $("#addProductError").show();
+                $("#addProductError").text("Product image invalid!");
+            } else if(add_pd_size.length <3) {
+                $("#addProductError").show();
+                $("#addProductError").text("Product size invalid!");
+            } else if(add_pd_url.length < 2 || add_pd_url.length > 255) {
+                $("#addProductError").show();
+                $("#addProductError").text("Product url invalid!");
+            } else {
+                $("#productAddForm").submit();
+            }
+
+        }
+
+    </script>
+    <script>
+        /*paging*/
+        var pageTotal = parseInt(document.getElementsByClassName("paging")[0].innerHTML);
+        var pagingCurent = parseInt(document.getElementsByClassName("pagingCurent")[0].innerHTML);
+        if(pagingCurent.length == 0){
+            pagingCurent = 0;
+        }
+        for(var i = 0; i< pageTotal; i++) {
+            if(i == pagingCurent) {
+                $(".pagination").append("<a href='?page="+(i)+"' class='active'>"+(i+1)+ "</a>");
+            } else {
+                $(".pagination").append("<a href='?page="+(i)+"'>"+(i+1)+ "</a>");
+            }
+        }
+        $(".pagination").append("<a>&raquo;</a>")
+    </script>
+    <script>
+
+        //make color for order status
+        // var orderStatus = $('#order-status').val();
+        let rowOrderList = parseInt($("#table-orderList tr").length)-1;
+        for (let i = 0; i< rowOrderList; i++) {
+            let order_status = document.getElementById("order-status"+i);
+            if(order_status.innerHTML == 'Paying') {
+                order_status.style.backgroundColor = "#ff8202"
+            } else if(order_status.innerHTML == "Canceled"){
+                order_status.style.backgroundColor = "#7e0303"
+            } else if(order_status.innerHTML == "Pending"){
+                order_status.style.backgroundColor = "#035785"
+            } else if(order_status.innerHTML == "Processing"){
+                order_status.style.backgroundColor = "#736a01"
+            }
+        }
+    </script>
+    <script>
+        /*money*/
+        var totalProduct = parseInt($("#table-orrderAdd tr").length)-1;
+        let toTalPrice = 0;
+        if(totalProduct > 0) {
+            for (let i = 0; i< totalProduct; i++) {
+                $("#orderProductQuantity"+i).change(function () {
+                    var orderProductQuantity =  parseInt($(this).val())
+                    var productPrice = parseFloat(document.getElementById("orderProductPrice"+i).innerHTML);
+                    var totalPriceProduct = orderProductQuantity*productPrice;
+                    $("#totalPriceProduct"+i).val(parseFloat(totalPriceProduct));
+                });
+            }
+        }
+        if(totalProduct == 1) {
+            $("#btn_delete0").hide();
+        }
+        var z = 0;
+        $("#btn_calTotal").click(function () {
+            if(z>1){
+                toTalPrice = 0;
+                for(let i = 0; i < totalProduct; i++) {
+                    toTalPrice+= parseFloat($("#totalPriceProduct"+i).val());
+                    $("#totalPrice").val(parseFloat(toTalPrice));
+                }
+            } else {
+                for(let i = 0; i < totalProduct; i++) {
+                    toTalPrice+= parseFloat($("#totalPriceProduct"+i).val());
+                    $("#totalPrice").val(parseFloat(toTalPrice));
+                }
+            }
+            z++;
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"   lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"/>
+</head>
+<body class="container-xxl">
+
+    <div layout:fragment="header" class="header">
+        <!-- top bar -->
+        <div class="topbar">
+            <div id="address"><b>185 Phùng Khoang, Trung Văn, Từ Liêm, Hà Nội</b></div>
+            <div id="description"><b>Giảm 5% đơn hàng từ 999K</b></div>
+            <div id="social">
+                <a href="https://www.facebook.com/chungdenroi" target="_blank" ><i class="ti-facebook"></i></a>
+                <a href="https://www.instagram.com/chungdenroi" target="_blank" ><i class="ti-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/chung-den-roi-705236154/" target="_blank" ><i class="ti-linkedin"></i></a>
+            </div>
+        </div>
+        <!-- header-bar -->
+        <div class="header-bar">
+            <div id="logo"><img th:src="@{/../../images/logo/logo.ico}" alt="logo chungdenroi" ></div>
+            <div id="menu">
+                <ul>
+                    <li><a href="/">Trang Chủ</a></li>
+                    <li><a href="/#categories">Danh Mục Sản Phẩm</a></li>
+                    <li><a href="/shop">Cửa Hàng</a></li>
+                    <li><a href="/#introduction">Giới Thiệu</a></li>
+                    <li><a href="#footer">Liên Hệ</a></li>
+                </ul>
+            </div>
+            <div id="cart">
+                <a th:href="@{/login}" ><img th:src="@{/../../images/icon/user.png}" alt="login"  title="Đăng nhập" id="btnloginHeader"></a>
+
+                <a th:href="@{/logout}" ><img th:src="@{/../../images/icon/logout.png}" alt="logout"  id="btnlogoutHeader" title="Đăng xuất" onclick="return confirm('Bạn có muốn thoát?')"></a>
+
+                <a href="/view-cart" style="text-decoration: none" id="_cart"><img th:src="@{/../../images/icon/bag.png}" alt="cart"/>
+                    <span id="cartTotal">0</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <div layout:fragment="content" class="content">
+
+    </div>
+
+    <div layout:fragment="footer" class="footer" id="footer">
+        <div class="_footer-content">
+            <div id="footer-col1">
+                <h2 style="color: #ff8202;">Chungdenroi</h2>
+                <p>Xưởng tranh uy tín - chất lượng.<br>Mang đến những sản phẩm tốt nhất cho khách hàng.</p>
+                <p>Địa chỉ: 185 Phùng Khoang, Hà Đông, HN
+                    <br>Điện thoại: 034.802.9744</p>
+                <p id="icon-footer"><i class="ti-facebook"></i>  <i class="ti-instagram"></i>  <i class="ti-linkedin"></i></p>
+
+            </div>
+            <div id="footer-col2">
+                <h6>HỖ TRỢ</h6>
+                <hr>
+                <ul>
+                    <li><a href="/order-status">Tra Cứu Đơn Hàng</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
+                    <li><a href="#">Câu Hỏi Thường Gặp</a></li>
+                    <li><a href="#">Chính Sách Bảo Hành</a></li>
+                    <li><a href="#">Chính Sách Đổi Trả</a></li>
+                </ul>
+            </div>
+            <div id="footer-col3">
+                <h6>DANH MỤC</h6>
+                <hr>
+                <ul>
+                    <li><a href="#">Tranh Slogan</a></li>
+                    <li><a href="#">Tranh Phong Cảnh</a></li>
+                    <li><a href="#">Tranh Minimalist</a></li>
+                    <li><a href="#">Tranh Scandinavia</a></li>
+                </ul>
+            </div>
+            <div id="footer-col4">
+                <h6>LIÊN HỆ</h6>
+                <hr>
+                <form>
+                    <input type="email" placeholder="Email" required>
+                    <br>
+                    <textarea placeholder="Thông điệp"></textarea>
+                    <br>
+                    <input type="submit" value="Gửi" class="button-outline" style="box-shadow: unset;">
+                </form>
+            </div>
+        </div>
+        <div class="_copyright-footer" layout:fragment="copyright">
+            <p>Copyright 2022 © <b>Chungdenroi</b></p>
+        </div>
+    </div>
+
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-showhidedashboard.js}"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script>
+    /*shadow for header*/
+    $("#btnlogoutHeader").hide();
+    let lastKnownScrollPosition = 0;
+    let ticking = false;
+    document.addEventListener('scroll', function(e) {
+        lastKnownScrollPosition = window.scrollY;
+        if (lastKnownScrollPosition > 0) {
+            window.requestAnimationFrame(function() {
+                $(".header").css("box-shadow","1px 2px 4px #8888");
+                ticking = false;
+            });
+
+            ticking = true;
+        } else{
+            $(".header").css("box-shadow","unset");
+
+        }
+    });
+    /*slider*/
+    $('.list-category').slick({
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 1500,
+    });
+
+    /*cartTotal*/
+    const cartTotal = "[[${session.cartTotal}]]";
+    if(cartTotal.length> 0) {
+        document.getElementById("cartTotal").innerHTML = cartTotal;
+    }
+    /*showhide loin logout*/
+    var username = "[[${session.username}]]";
+    if(username.length <1){
+        $("#btnlogoutHeader").hide();
+        $("#btnloginHeader").show();
+    } else {
+        $("#btnlogoutHeader").show();
+        $("#btnloginHeader").hide();
+    }
+
+    /*click btn search*/
+    $(".ti-search").click(function (){
+        $("#formIndex").submit();
+    });
+    /*change action form when click bnt mua ngay*/
+    $("#btnMuaNgay").click(function () {
+        $("#formCheckout").attr("action","/checkout");
+    })
+
+    /*order-success show hide account info*/
+    $(document).ready(function () {
+        var username =document.getElementById("username_ord").innerHTML;
+        var password =document.getElementById("password_ord").innerHTML;
+        if(username.length==0 ||  password.length==0) {
+            $(".order-success-acc").hide();
+        } else {
+            $(".order-success-acc").show();
+        }
+    })
+    </script>
+
+<script>
+
+
+
+
+    /*check cahngeUserinffo*/
+    function checkChangePass() {
+        const newPass = $("#newPass").val();
+        const repeatPass = $("#repeatPass").val();
+        const newUsername = $("#new_username").val();
+        if(newUsername.length < 2 || newUsername.length>60) {
+            $("#error_message_pass").text("Tên người dùng từ 2 đến 60 ký tự").css({"color":"red","font-style":"italic"});
+        } else if((newPass.length < 5 || newPass.length > 10) || (repeatPass.length <5 || repeatPass.length > 10)) {
+            $("#error_message_pass").text("Độ dài mật khẩu từ 5 - 10 ký tự").css({"color":"red","font-style":"italic"});
+        } else {
+            if(newPass != repeatPass ) {
+                $("#error_message_pass").show();
+                $("#error_message_pass").text("Mật khẩu chưa khớp").css({"color":"red","font-style":"italic"});
+                return false;
+            } else {
+                $("#form_change_user").submit();
+            }
+        }
+    }
+
+
+    /*get toatlPayment btn*/
+    const totalItems = parseInt($(".checkout-productlist tr").length) - 1;
+    let totalPyament = 0;
+    if(totalItems > 0) {
+        for (var item = 0; item < totalItems; item++) {
+            const itemPrice = parseInt($("#ck-totalPriceProduct"+item).val());
+            totalPyament += itemPrice;
+        }
+        document.getElementById("totalPyament").innerHTML = totalPyament + " VND";
+    }
+
+    /*make color*/
+    let acc_rowOrderList = parseInt($("#acc-table-orderList tr").length)-1;
+    for (let z = 0; z< acc_rowOrderList; z++) {
+        let acc_order_status = document.getElementById("acc-order-status"+z);
+        if(acc_order_status.innerHTML == 'Paying') {
+            acc_order_status.style.backgroundColor = "#ff8202";
+        } else if(acc_order_status.innerHTML == "Canceled"){
+            $("#acc-row"+z).css("background-color","#e1e8e8");
+            $("#cancel-order"+z).css('display','none');
+            acc_order_status.style.backgroundColor = "#7e0303";
+        } else if(acc_order_status.innerHTML == "Pending"){
+            acc_order_status.style.backgroundColor = "#035785";
+        } else if(acc_order_status.innerHTML == "Processing"){
+            acc_order_status.style.backgroundColor = "#736a01";
+        } else if(acc_order_status.innerHTML == "Successed") {
+            $("#acc-row"+z).css("background-color","#e1e8e8");
+            $("#cancel-order"+z).css('display','none');
+
+            // $("#acc-action button"+z).attr('disabled','disabled');
+        }
+    }
+    /*check quantity product when buying*/
+    $("#choose-product-quantity").change(function () {
+        let sg_quantity = parseInt(document.getElementById("sg-product-quantity").innerHTML);
+        let choose_quantity = parseInt($("#choose-product-quantity").val());
+        if(choose_quantity > sg_quantity) {
+            alert("Số lượng sản phẩm bạn mua vượt quá số lượng trong kho. Vui lòng điều chỉnh lại!");
+            $("#btnAddToCart").attr("disabled","disabled");
+            $("#btnMuaNgay").attr("disabled","disabled");
+        } else {
+            $("#btnAddToCart").attr("disabled",false);
+            $("#btnMuaNgay").attr("disabled",false);
+        }
+    })
+
+
+    /*filetre price*/
+    $("#filterPrice").change(function () {
+        $("#filterForm").submit();
+    })
+    /*sort*/
+    $("#shop-sort-select").change(function () {
+        $("#shop-sort").submit();
+    })
+    /*size*/
+    $("#filterSizeForm").change(function () {
+        $("#filterSizeForm").submit();
+    })
+
+
+    /*checkvalid form*/
+    function checkRegister() {
+        let fullname =  $("#fullname").val();
+        // alert(fullname);
+        let username = $("#username").val();
+        // alert(username)
+        let password = $("#password").val();
+        // alert(password)
+        let pwd_repeat = $("#pwd_repeat").val();
+        // alert(pwd_repeat)
+        let email = $("#email").val();
+        // alert(email)
+        let mobilenumber = $("#mobilenumber").val();
+        // alert(mobilenumber)
+        let address = $("#_address").val();
+        // alert(address);
+        if(fullname.length < 2 || fullname.length > 60) {
+            alert("Họ và tên không hợp lệ!");
+        } else if(username.length < 2 || username.length > 60) {
+            alert("Tên đăng nhập không hợp lệ!");
+        } else if(password.length < 5 || password.length > 10) {
+            alert("Mật khẩu chỉ từ 5 - 10 ký tự!");
+        } else if(pwd_repeat.length < 5 || pwd_repeat.length > 10) {
+            alert("Mật khẩu chỉ từ 5 - 10 ký tự!");
+        } else if(email.length < 10 || email.length > 100) {
+            alert("Email không hợp lệ");
+        } else if(mobilenumber.length != 10) {
+            alert("Số điện thoại không hợp lệ");
+        } else if(address.length < 2 || address.length > 100) {
+            alert("Địa chỉ không hợp lệ");
+        } else {
+            if (password != pwd_repeat) {
+                alert("Mật khẩu nhập lại chưa khớp. Vui lòng thử lại!");
+            } else {
+                $("#registerForm").submit();
+            }
+        }
+    }
+</script>
+<script>
+    function checkOutValid1() {
+        let ck_fullname = $("#ck_fullname").val();
+        let ck_mobilenumber = $("#ck_mobilenumber").val();
+        let ck_email = $("#ck_email").val();
+        let ck_address = $("#ck_address").val();
+        if(ck_fullname.length < 2 || ck_fullname.length > 60) {
+            alert("Họ và tên không hợp lệ!");
+        } else if(ck_email.length < 10 || ck_email.length > 100) {
+            alert("Email không hợp lệ");
+        } else if(ck_mobilenumber.length != 10) {
+            alert("Số điện thoại không hợp lệ");
+        } else if(ck_address.length < 2 || ck_address.length > 100) {
+            alert("Địa chỉ không hợp lệ");
+        } else {
+            $("#checkoutForm1").submit();
+        }
+    }
+    function checkOutValid2() {
+        let ck_fullname = $("#ck_fullname2").val();
+        let ck_mobilenumber = $("#ck_mobilenumber2").val();
+        let ck_email = $("#ck_email2").val();
+        let ck_address = $("#ck_address2").val();
+        if(ck_fullname.length < 2 || ck_fullname.length > 60) {
+            alert("Họ và tên không hợp lệ!");
+        } else if(ck_email.length < 10 || ck_email.length > 100) {
+            alert("Email không hợp lệ");
+        } else if(ck_mobilenumber.length != 10) {
+            alert("Số điện thoại không hợp lệ");
+        } else if(ck_address.length < 2 || ck_address.length > 100) {
+            alert("Địa chỉ không hợp lệ");
+        } else {
+            $("#checkoutForm2").submit();
+        }
+    }
+
+</script>
+<script>
+    /*displaynone bnedit if orderstatus is success and cancel*/
+    if(document.getElementById("acc-view-detail-status").innerHTML === "Successed" || document.getElementById("acc-view-detail-status").innerHTML === "Canceled") {
+        $("#acc-view-detail-btnEdit").css("display","none");
+    }
+</script>
+
+<script>
+    let totatlProduct = parseInt($("#product_list>div").length);
+    for (let i = 0; i<totatlProduct;i++){
+        if(i>11) {
+            $("#product_list").children("div").eq(i).hide();
+        }
+    }
+</script>
+
+    <script>
+        /*paging*/
+        var pageTotalV = parseInt(document.getElementsByClassName("paging")[0].innerHTML);
+        var pagingCurentV = parseInt(document.getElementsByClassName("pagingCurent")[0].innerHTML);
+        if(pagingCurentV.length == 0){
+            pagingCurentV = 0;
+        }
+        for(var i = 0; i< pageTotalV; i++) {
+            if(i == pagingCurentV) {
+                $(".pagination").append("<a href='?page="+(i)+"' class='active'>"+(i+1)+ "</a>");
+            } else {
+                $(".pagination").append("<a href='?page="+(i)+"'>"+(i+1)+ "</a>");
+            }
+        }
+        // $(".pagination").append("<a>&raquo;</a>")
+    </script>
+
+    <script>
+        let totalProduct = parseInt($("#acc-table-orrderAdd tr").length)-1;
+        let toTalPrice = 0;
+        if(totalProduct > 0) {
+            for (let i = 0; i< totalProduct; i++) {
+                $("#acc-orderProductQuantity"+i).change(function () {
+                    var orderProductQuantity =  parseInt($(this).val());
+                    var productPrice = parseFloat(document.getElementById("acc-orderProductPrice"+i).innerHTML);
+                    var totalPriceProduct = orderProductQuantity*productPrice;
+                    $("#acc-totalPriceProduct"+i).val(parseFloat(totalPriceProduct));
+                });
+            }
+        }
+        if(totalProduct == 1) {
+            $("#acc-btn_delete0").hide();
+        }
+        var z = 0;
+        $("#acc-btn_calTotal").click(function () {
+            if(z>1){
+                toTalPrice = 0;
+                for(let i = 0; i < totalProduct; i++) {
+                    toTalPrice+= parseFloat($("#acc-totalPriceProduct"+i).val());
+                    $("#acc-totalPrice").val(parseFloat(toTalPrice));
+                }
+            } else {
+                for(let i = 0; i < totalProduct; i++) {
+                    toTalPrice+= parseFloat($("#acc-totalPriceProduct"+i).val());
+                    $("#acc-totalPrice").val(parseFloat(toTalPrice));
+                }
+            }
+
+            z++;
+        })
+    </script>
+</body>
+</html>

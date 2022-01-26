@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Tra cứu tình trạng đơn hàng</title>
+</head>
+<body>
+<div class="container-xxl" layout:fragment="content">
+    <div class="orderStatus">
+        <div class="os-row1">
+            <form th:action="@{/order-status}" class="form-group" method="post">
+                <fieldset class="form-group">
+                    <label>Vui lòng nhập mã đơn hàng</label>
+                    <input type="number" required minlength="1" name="orderID" placeholder="Nhập mã đơn hàng tại đây..." class="form-control">
+                </fieldset>
+                <br>
+                <div>
+                    <button type="submit" class="button-primary">Tra cứu</button>
+                </div>
+            </form>
+        </div>
+        <hr>
+        <div class="os-row2">
+            <h6>THÔNG TIN ĐƠN HÀNG</h6>
+            <hr class="sg-product-name">
+            <div>
+                <table class="table border-bottom" th:if="${orders}">
+                    <tr>
+                        <td>
+                            <p th:text="'Tình trạng đơn hàng của bạn: '"></p>
+                        </td>
+                        <td>
+                            <span th:text="${orders.status}" style="background-color: #ff8202; color: white; font-weight: bold; width: 40px;padding: 2%"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mã đơn hàng: </td>
+                        <td th:text="${orders.id}"></td>
+                    </tr>
+                    <tr>
+                        <td>Ngày đặt hàng: </td>
+                        <td th:text="${orders.orderDate}"></td>
+                    </tr>
+                </table>
+                <div th:if="${status}">
+                    <h6 th:text="${status}"></h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/jquery-showhidedashboard.js}"></script>
+
+</body>
+</html>

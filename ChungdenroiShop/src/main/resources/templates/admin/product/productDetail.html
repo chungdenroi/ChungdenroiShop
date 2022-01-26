@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="admin/_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!--    <link rel="stylesheet" th:href="@{/css/style.css}">-->
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+    <!--    <link rel="stylesheet" href="../../static/css/admin.css">-->
+    <!--    <link rel="stylesheet" href="../../static/css/bootstrap.min.css">-->
+    <!--    <link rel="stylesheet" href="../../static/css/library.css">-->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Category Detail</title>
+</head>
+<body>
+<div class="container-xxl">
+    <div class="content" layout:fragment="content-admin">
+        <h2 class="text-center">PRODUCT DETAIL</h2>
+        <div class="content-body">
+            <div class="content-body-col1">
+                <div class="admin-product-image">
+                    <img th:src="@{'../../images/products/'+${product.image}}" width="300" height="300"/>
+                </div>
+                <div class="admin-product-info">
+                    <h4 th:text="${product.name}"></h4>
+                    <hr class="sg-product-name">
+                    <table class="table border-bottom">
+                        <tr>
+                            <td>
+                                <p>Category:</p>
+                            </td>
+                            <td>
+                                <b><a th:href="'/admin/category/'+${product.category.id}"><span th:text="${product.category.name}"/></a></b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Brand:</p>
+                            </td>
+                            <td>
+                                <b><span th:text="${productDetail.brand}"/></b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Size:</td>
+                            <td><b><span th:text="${productDetail.size}"></span></b></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Price:
+                            </td>
+                            <td>
+                                <b><span th:text="${product.price}"/> VND</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p>Quantity:</p></td>
+                            <td><b><span th:text="${productDetail.quantity}"/></b></td>
+                        </tr>
+                        <tr>
+                            <td>URL:</td>
+                            <td> <b><span th:text="${productDetail.url}"/></b></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <hr>
+            <div class="content-body-col2">
+                <div>
+                    <h6 class="text-center">DESCRIPTION</h6>
+                    <p th:text="${productDetail.description}"></p>
+                </div>
+                <div>
+                    <a th:href="@{updateDetail+'/'+${productDetail.id}}"><button class="text-center btn btn-danger">UPDATE</button></a>
+                </div>
+            </div>
+        </div>
+        <i class="ti-layout-grid2-alt" id="btndashboard"></i>
+    </div>
+
+</div>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-showhidedashboard.js}"></script>
+</body>
+</html>

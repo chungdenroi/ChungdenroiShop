@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="admin/_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!--    <link rel="stylesheet" th:href="@{/css/style.css}">-->
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+    <!--    <link rel="stylesheet" href="../../static/css/admin.css">-->
+    <!--    <link rel="stylesheet" href="../../static/css/bootstrap.min.css">-->
+    <!--    <link rel="stylesheet" href="../../static/css/library.css">-->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Update Product</title>
+</head>
+<body>
+<div class="container-xxl">
+    <div class="content" layout:fragment="content-admin">
+        <div class="card-body">
+            <form th:action="@{/admin/product/saveUpdate}" th:object="${product}" method="post">
+                <h2 class="text-center">UPDATE PRODUCT</h2>
+                <input type="hidden" th:field="*{id}"/>
+                <fieldset class="form-group">
+                    <label>Product name </label>
+                    <input class="form-control" type="text" required th:field="*{name}">
+                    <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Product price </label>
+                    <input class="form-control" type="number" required th:field="*{price}" step="0.1">
+                    <p th:if="${#fields.hasErrors('price')}" th:errorclass="error" th:errors="*{price}" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Product image </label>
+                    <input class="form-control" type="file" required th:field="*{image}" accept="image/*" >
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Product category  </label>
+                    <select th:field="*{category.id}" class="form-select">
+<!--                        th:value="${categoryL.id}" th:if="${categoryL.id == *{category.id}} 'selected' "-->
+                        <option th:each="categoryL : ${categoryList}" th:text="${categoryL.name}" th:value="${categoryL.id}" />
+                    </select>
+                </fieldset>
+                <div class="col text-center mt-3">
+                    <button type="submit" class="btn btn-danger">UPDATE</button>
+                    <button type="reset" class="btn btn-secondary">RESET</button>
+                </div>
+            </form>
+        </div>
+        <i class="ti-layout-grid2-alt" id="btndashboard"></i>
+    </div>
+
+</div>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-showhidedashboard.js}"></script>
+</body>
+</html>

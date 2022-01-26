@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/library.css}">
+
+
+  <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+  />
+  <title> Cửa Hàng</title>
+</head>
+<body>
+  <div class="card-body" layout:fragment="content">
+    <div class="shop_header">
+        <div class="shop_header_col1">
+          <h4>CỬA HÀNG</h4>
+        </div>
+      <div class="shop_header_col2">
+        <form th:action="@{/sort}" method="post" th:id="'shop-sort'">
+          <select name="name" id="shop-sort-select">
+            <option>Sắp xếp</option>
+            <option value="new">Mới nhất</option>
+            <option value="lowtohigh" >Giá thấp đến cao</option>
+            <option value="hightolow" >Giá cao xuống thấp</option>
+          </select>
+        </form>
+      </div>
+    </div>
+    <div class="shop_body">
+      <div class="shop_sidebar">
+        <div>
+          <form class="form-group" th:action="@{/search}">
+            <input type="text" name="name" placeholder="Tìm kiếm..." class="form-control">
+          </form>
+        </div>
+        <div>
+          <h6>DANH MỤC SẢN PHẨM</h6>
+          <hr class="sg-product-name">
+          <ul>
+            <li th:each="categoryDetail : ${categoryDetails}" ><a th:href="@{'/category/'+${categoryDetail.url}}" th:text="${categoryDetail.name}"></a> </li>
+          </ul>
+        </div>
+
+        <div>
+          <h6>LỌC THEO GIÁ</h6>
+          <hr class="sg-product-name">
+          <form th:action="@{/filterPrice}" id="filterForm" class="form-group" method="post">
+            <select id="filterPrice" class="form-select" name="price">
+              <option selected>Chọn khoảng giá</option>
+              <option value="50000-200000">Từ 50.000 đến 200.000</option>
+              <option value="200000-500000">Từ 200.000 đến 500.000</option>
+              <option value="500000-1000000">Từ 500.000 đến 1.000.000</option>
+              <option value="1000000">Từ 1.000.000 trở lên</option>
+            </select>
+          </form>
+        </div>
+        <div>
+          <h6>LỌC THEO KÍCH THƯỚC</h6>
+          <hr class="sg-product-name">
+          <form class="form-group" th:action="@{/filterSize}" id="filterSizeForm" method="post">
+            <label ><input type="radio" name="filterSize" value="30x40cm" class="form-check-inline"> 30x40cm</label>
+            <br>
+            <label ><input type="radio" name="filterSize" value="40x60cm" class="form-check-inline"> 40x60cm</label>
+            <br>
+            <label><input type="radio" name="filterSize" value="50x70cm" class="form-check-inline"> 50x70cm</label>
+            <br>
+            <label><input type="radio" name="filterSize" value="60x90cm" class="form-check-inline"> 60x90cm</label>
+            <br>
+          </form>
+          <br>
+        </div>
+
+        <div>
+          <h6>SẢN PHẨM BÁN CHẠY</h6>
+          <hr class="sg-product-name">
+          <div class="shop_product_best" th:each="productDetail : ${bestSale}">
+            <div class="shop-product_best_col1">
+              <a th:href="@{${productDetail.url}}"><img th:src="@{'../../images/products/'+${productDetail.product.image}}"/></a>
+            </div>
+            <div class="shop-product_best_col2">
+              <p class="product-name" th:text="${productDetail.product.name}"/>
+              <b class="product-price" th:text="${productDetail.product.price}"/>VND
+            </div>
+            <hr>
+          </div>
+
+        </div>
+      </div>
+      <div class="shop_product">
+        <p th:text="${session.messageS}"></p>
+<!--          row1-->
+        <div>
+            <div class="shop_product-col" th:each="productDetail : ${productDetails}">
+              <a th:href="@{'/'+${productDetail.url}}"> <img th:src="@{'/../../images/products/'+${productDetail.product.image}}"/></a>
+              <div>
+                <p class="product-category" th:text="${productDetail.product.category.name}"/>
+                <p class="product-name" th:text="${productDetail.product.name}"/>
+                <b class="product-price" th:text="${productDetail.product.price}"/>VND
+              </div>
+            </div>
+
+        </div>
+        <!--            /*paging*/-->
+
+        <div layout:fragment="paging" class="pagination">
+          <p th:value="${pageTotal}" th:text="${pageTotal}" class="paging" style="display: none"></p>
+          <p th:text="${#httpServletRequest.getParameter('page')}" class="pagingCurent" style="display: none" ></p>
+        </div>
+
+    </div>
+  </div>
+  </div>
+</body>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/jquery-showhidedashboard.js}"></script>
+</html>

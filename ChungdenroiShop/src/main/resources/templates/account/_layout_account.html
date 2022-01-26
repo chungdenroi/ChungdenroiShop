@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title> </title>
+</head>
+<body>
+<div class="container-xxl">
+    <!-- content -->
+    <div class="content-user" layout:fragment="account-content">
+        <div class="account-content" >
+            <div class="account-sidebar">
+                <ul>
+                    <li><a th:href="">Lịch sử mua hàng</a> </li>
+                    <li><a th:href="">Thông tin tài khoản</a> </li>
+                </ul>
+            </div>
+            <div class="account-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/jquery-showhidedashboard.js}"></script>
+
+
+
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Thông tin tài khoản</title>
+</head>
+<body>
+        <div layout:fragment="content" class="content">
+            <div layout:fragment="account-content" class="account-content">
+                <div class="account-sidebar" layout:fragment="account-sidebar">
+                    <ul>
+                        <li><a th:href="'/account'">Tài khoản</a> </li>
+                        <li> <a th:href="'/account/order-history'">Lịch sử mua hàng</a> </li>
+                        <li><a th:href="'/account/change'">Đổi thông tin tài khoản</a> </li>
+                        <li><a th:href="'/logout'">Đăng xuất</a> </li>
+                    </ul>
+                </div>
+                <div layout:fragment="account-body" class="account-body">
+<!--                    <h2 th:text="'Xin chào' + ${username}"/>-->
+                    <table class="table table-hover border-bottom">
+                        <tr>
+                            <td>Họ và tên: </td>
+                            <td><b th:text="${customer.fullname}"></b></td>
+                        </tr>
+                        <tr>
+                            <td>Số điện thoại: </td>
+                            <td><b th:text="${userAccount.mobilenumber}"></b></td>
+                        </tr>
+                        <tr>
+                            <td>Email: </td>
+                            <td><b th:text="${userAccount.email}"></b></td>
+                        </tr>
+                        <tr>
+                            <td>Địa chỉ: </td>
+                            <td><b th:text="${userAccount.address}"></b></td>
+                        </tr>
+                    </table>
+                    <div>
+                        <a th:href="'/account/'+${username}"><button class="button-primary">Thay đổi</button> </a>
+                    </div>
+<!--                    <p th:text="${userAccount.username}"></p>-->
+                </div>
+
+
+            </div>
+        </div>
+</body>
+</html>

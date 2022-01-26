@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="admin/_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!--    <link rel="stylesheet" th:href="@{/css/style.css}">-->
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+    <!--    <link rel="stylesheet" href="../../static/css/admin.css">-->
+    <!--    <link rel="stylesheet" href="../../static/css/bootstrap.min.css">-->
+    <!--    <link rel="stylesheet" href="../../static/css/library.css">-->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Add Order</title>
+</head>
+<body>
+<div class="container-xxl">
+    <div class="content" layout:fragment="content-admin">
+        <div class="card-body">
+            <form th:action="@{saveAdd}" th:object="${order}" method="get" id="orderAddForm">
+                <h2 class="text-center text-primary">ADD CATEGORY</h2>
+                <fieldset class="form-group">
+                    <label>Order name </label>
+                    <input class="form-control" type="text" required th:field="*{name}">
+                    <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Order total price </label>
+                    <input class="form-control" type="number" required th:field="*{totalPrice}" id="totalPrice"/>
+                    <p th:if="${#fields.hasErrors('totalPrice')}" th:errorclass="error" th:errors="*{totalPrice}" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Customer ID </label>
+                    <input class="form-control" type="number"  th:field="*{customer.id}" step="0.1">
+                    <p th:if="${#fields.hasErrors('customer.id')}" th:errorclass="error" th:errors="*{customer.id}" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Order status </label>
+                    <select class="form-select" th:filed="*{status}">
+                        <option value="'Pending'">Pending</option>
+                        <option value="'Canceled'">Canceled</option>
+                        <option value="'Paying'">Paying</option>
+                        <option value="'Successed'">Successed</option>
+                        <option value="'Processing'">Processing</option>
+                    </select>
+                </fieldset>
+                <div th:object="${orderDetail}">
+                    <fieldset class="form-group">
+                        <label>Delivery address </label>
+                        <input class="form-control" type="text" required th:field="*{deliveryAddress}"/>
+                        <p th:if="${#fields.hasErrors('deliveryAddress')}" th:errorclass="error" th:errors="*{deliveryAddress}" />
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label>Email </label>
+                        <input class="form-control" type="text" th:field="*{email}">
+                        <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}" />
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label>Mobile number </label>
+                        <input class="form-control" type="text" th:field="*{mobilenumber}">
+                        <p th:if="${#fields.hasErrors('mobilenumber')}" th:errorclass="error" th:errors="*{mobilenumber}" />
+                    </fieldset>
+                    <input class="form-control" type="hidden" th:value="${order.id}" th:field="*{order.id}">
+                </div>
+
+
+                <div class="form-group" th:object="${orderProduct}">
+                    <label>Choose Product</label>
+                    <table class="table border-bottom" id="table-orrderAdd">
+                        <tr>
+                            <th>Product name</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr >
+                            <td id="selectProduct">
+                                <select th:id="'productID'" name="product_id" class="form-select">
+                                    <option  th:each="product : ${products}" th:value="${product.id}" th:text="${product.name}"/>
+                                </select>
+                            </td>
+                            <td id="productQuantity">
+                                <input type="number" name="product_quantity" required  id="orderProductQuantity" class="form-control"/> <br>
+                            </td>
+                            <td id="actionOrderAdd">
+                                <button class="btn btn-danger" id="btn_delete"><i class="ti-close"></i></button>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <div>
+                        <button class="btn btn-success" type="submit" id="btn_addMore"><i class="ti-plus"></i></button>
+
+                    </div>
+<!--                    <input type="checkbox" th:field="*{product}" th:each="product : ${products}" th:value="${product.id}" th:text="' ' + ${product.name} + ' '">-->
+<!--                    <input >-->
+                </div>
+<!--                <fieldset class="form-group">-->
+<!--                    <label>Quantity </label>-->
+<!--                    <input class="form-control" type="number"  th:field="*{orderProductQuantity}" step="0.1" id="orderProductQuantity">-->
+<!--                    <p th:if="${#fields.hasErrors('orderProductQuantity')}" th:errorclass="error" th:errors="*{orderProductQuantity}" />-->
+<!--                </fieldset>-->
+<!--                <fieldset class="form-group">-->
+<!--                    <label>Total price </label>-->
+<!--                    <input class="form-control" type="number"  th:field="*{totalPriceProduct}" id="totalPriceProduct">-->
+<!--                    <p th:if="${#fields.hasErrors('totalPriceProduct')}" th:errorclass="error" th:errors="*{totalPriceProduct}" />-->
+<!--                </fieldset>-->
+
+<!--                </div>-->
+
+
+                <div class="col text-center mt-3">
+                    <button type="submit" class="btn btn-danger" >ADD</button>
+                    <button type="reset" class="btn btn-secondary">RESET</button>
+                </div>
+            </form>
+        </div>
+        <i class="ti-layout-grid2-alt" id="btndashboard"></i>
+    </div>
+
+</div>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-showhidedashboard.js}"></script>
+<script>
+    $("#orderProductQuantity").change(function () {
+        var orderProductQuantity =  parseInt($(this).val())
+        var productPrice = parseInt( $("#productPrice").val() );
+        alert(orderProductQuantity);
+        alert(productPrice);
+        // alert(productPrice);
+        var totalPrice = orderProductQuantity*productPrice;
+        // alert(totalPrice);
+        $("#totalPriceProduct").val(parseFloat(totalPrice));
+        $("#totalPrice").val(parseFloat(totalPrice));
+    })
+    $("#productID").change(function () {
+        $("#orderProductQuantity").change(function () {
+            var orderProductQuantity =  parseInt($(this).val())
+            var productPrice = parseInt( $("#productPrice").val() );
+            alert(orderProductQuantity);
+            alert(productPrice);
+            // alert(productPrice);
+            var totalPrice = orderProductQuantity*productPrice;
+            // alert(totalPrice);
+            $("#totalPriceProduct").val(parseFloat(totalPrice));
+            $("#totalPrice").val(parseFloat(totalPrice));
+        })
+    })
+
+</script>
+</body>
+</html>

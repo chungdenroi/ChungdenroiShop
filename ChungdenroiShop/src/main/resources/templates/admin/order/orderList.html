@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="admin/_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!--    <link rel="stylesheet" th:href="@{/css/style.css}">-->
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+
+    <!--    <link rel="stylesheet" href="../../static/css/admin.css">-->
+    <!--    <link rel="stylesheet" href="../../static/css/bootstrap.min.css">-->
+    <!--    <link rel="stylesheet" href="../../static/css/library.css">-->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Order List</title>
+</head>
+<body>
+<div class="container-xxl">
+    <div class="content" layout:fragment="content-admin">
+        <div class="header-admin">
+            <h6>ORDER</h6>
+            <div class="toolbar" style="display: inline-flex; overflow: hidden;text-align: center">
+                <select class="form-select-sm" id="sortby">
+                    <option value="" selected>Sort</option>
+                    <option value="asc" >Asc</option>
+                    <option value="desc" >Desc</option>
+                </select>
+                <div class="search-admin">
+                    <form th:action="@{search}" method="get" class="form-group">
+                        <input type="search" placeholder="Search..." class="form-control" name="name">
+                    </form>
+                </div>
+                <div style="display: inline-block;overflow: hidden; width: fit-content;height: fit-content">
+                    <form th:action="@{/admin/order/date}" method="get" class="form-group">
+                        <input type="date" th:value="${curentDate}" name="date" class="form-control" style="float: left;width: fit-content">
+                        <input class="btn btn-dark" type="submit"  value="View" style="float: left; width: fit-content">
+                    </form>
+                </div>
+<!--                <a th:href="'add'"><button class="button-primary">Add   <i class="ti-plus" style="font-size: 18px;"></i></button></a>-->
+            </div>
+        </div>
+        <div class="data">
+            <div class="">
+                <table id="table-orderList" class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Total Price</th>
+                        <th>Customer</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td th:text="${order.id}"/>
+                        <td th:text="${order.orderDate}"/>
+                        <td>
+                            <a th:href="'/admin/order/'+${order.id}" th:text="${order.name}"></a>
+                        </td>
+                        <td>
+                            <p>
+                                <span th:text="${order.totalPrice}"></span> VND
+                            </p>
+                        </td>
+                        <td>
+                            <p th:if="${order.customer}">
+                                <a th:href="'/admin/customer/'+${order.customer.id}" th:text="${order.customer.fullname}" />
+                            </p>
+                            <p th:unless="${order.customer}">
+                                <span>The customer has been deleted
+                                </span>
+                            </p>
+                        </td>
+                        <td>
+                            <a th:href="'/admin/order/status/'+${order.status}"> <button th:id="'order-status'+${orderStat.index}" th:text="${order.status}" style="border: none;color: white;border-radius: 4px;padding: 4%;background-color: #1f9817"/></a>
+                        <td>
+                            <a th:href="'/admin/order/delete/'+${order.id}" onclick="return confirm('Do you want to delete?')"><i class="ti-trash"></i></a>
+                            <a th:href="'/admin/order/update/'+${order.id}"><i class="ti-marker-alt"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <i class="ti-layout-grid2-alt" id="btndashboard"></i>
+        <div layout:fragment="paging" class="pagination">
+            <p th:value="${pageTotal}" th:text="${pageTotal}" class="paging" style="display: none"></p>
+            <p th:text="${#httpServletRequest.getParameter('page')}" class="pagingCurent" style="display: none" ></p>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-showhidedashboard.js}"></script>
+
+<!-- <script src="../../static/js/bootstrap.bundle.min.js"></script> -->
+<!--<script src="../../static/js/jquery-3.6.0.min.js"></script>-->
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Đăng Ký</title>
+</head>
+<body>
+    <div class="container-xxl">
+
+        <div class="registration" layout:fragment="content">
+            <h4>Đăng Ký</h4>
+            <form th:action="@{register}" method="post" id="registerForm">
+                <div class="form-group">
+                    <label for="fullname">Họ và Tên:</label>
+                    <input type="text" class="form-control" placeholder="Nhập họ và tên" id="fullname" name="fullname" required minlength="2" maxlength="60">
+                </div>
+                <div class="form-group">
+                    <label for="username">Tên đăng nhập:</label>
+                    <input type="text" class="form-control" placeholder="Nhập tên đăng nhập" id="username" name="username" minlength="2" maxlength="60" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mật khẩu:</label>
+                    <input type="password" class="form-control" placeholder="Nhập mật khẩu" id="password" name="password" minlength="5" maxlength="10" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Nhập lại mật khẩu:</label>
+                    <input type="password" class="form-control" placeholder="Nhập lại mật khẩu" id="pwd_repeat" name="pwrepeat" minlength="5" maxlength="10" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" class="form-control" placeholder="Nhập email" id="email" name="email" minlength="10" maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="mobilenumber">Số điện thoại:</label>
+                    <input type="number" class="form-control" placeholder="Nhập số điện thoại" id="mobilenumber" name="mobilenumber" required minlength="10" maxlength="10">
+                </div>
+                <div class="form-group">
+                    <label for="_address">Địa chỉ:</label>
+                    <input type="text" class="form-control" placeholder="Nhập địa chỉ" id="_address" name="address" required minlength="5" maxlength="100">
+                </div>
+                <button type="button" class="button-primary" onclick="return checkRegister();">Đăng Ký</button>
+            </form>
+            </p>
+        </div>
+
+
+    </div>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/jquery-showhidedashboard.js}"></script>
+
+</body>
+</html>

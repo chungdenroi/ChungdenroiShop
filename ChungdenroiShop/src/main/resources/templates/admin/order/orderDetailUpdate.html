@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="admin/_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!--    <link rel="stylesheet" th:href="@{/css/style.css}">-->
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title>Update Order Detail</title>
+</head>
+<body>
+<div class="container-xxl">
+    <div class="content" layout:fragment="content-admin">
+        <div class="card-body">
+            <form th:action="@{/admin/order/saveUpdateDetail}" th:object="${orderDetail}" method="post">
+                <h2 class="text-center">UPDATE ORDER DETAIL</h2>
+                <input type="hidden" th:field="*{id}"/>
+                <fieldset class="form-group">
+                    <label>Delivery address </label>
+                    <input class="form-control" type="text" required th:field="*{deliveryAddress}"/>
+                    <p th:if="${#fields.hasErrors('deliveryAddress')}" th:errorclass="error" th:errors="*{deliveryAddress}" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Email </label>
+                    <input class="form-control" type="text" th:field="*{email}">
+                    <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Mobile number </label>
+                    <input class="form-control" type="text" th:field="*{mobilenumber}">
+                    <p th:if="${#fields.hasErrors('mobilenumber')}" th:errorclass="error" th:errors="*{mobilenumber}" />
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Order ID </label>
+                    <input class="form-control" type="text" th:field="*{order}" readonly>
+                </fieldset>
+                <fieldset class="form-group">
+                    <label>Message </label>
+                    <input class="form-control" type="text" th:field="*{message}" readonly>
+                </fieldset>
+
+                <div class="col text-center mt-3">
+                    <button type="submit" class="btn btn-danger" >UPDATE</button>
+                    <button type="reset" class="btn btn-secondary">RESET</button>
+                </div>
+            </form>
+        </div>
+        <i class="ti-layout-grid2-alt" id="btndashboard"></i>
+    </div>
+
+</div>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-showhidedashboard.js}"></script>
+
+
+</body>
+</html>

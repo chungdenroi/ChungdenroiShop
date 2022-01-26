@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <title> Đặt Hàng Thành Công</title>
+</head>
+<body class="container-xxl">
+    <!-- content -->
+    <div layout:fragment="content" class="content">
+        <div class="order-success">
+            <div>
+                <div>
+                    <i class="ti-check"></i>
+                </div>
+                <h5>ĐẶT HÀNG THÀNH CÔNG! <span th:text="'#'+${order_id}"></span></h5>
+                <h6>Nhân viên CSKH của Chungdenroi sẽ gọi điện xác nhận đơn hàng trong vài giờ tới. Xin cảm ơn!</h6>
+            </div>
+            <hr>
+            <div class="order-success-acc">
+                <h6>THÔNG TIN TÀI KHOẢN</h6>
+                <p>Tên đăng nhập: <span th:text="${username}" id="username_ord"></span> </p>
+                <p>Mật khẩu: <span th:text="${password}" id="password_ord"></span> </p>
+                <hr>
+            </div>
+            <div class="order-success-search">
+                <label>Theo dõi đơn hàng: <a href="/order-status">Tại đây</a></label>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/jquery-showhidedashboard.js}"></script>
+
+
+</html>

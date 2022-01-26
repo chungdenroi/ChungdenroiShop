@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="_layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/library.css}">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css"
+    />
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+    <title> Trang Chủ</title>
+</head>
+<body>
+        <!-- content -->
+        <div class="content" layout:fragment="content">
+
+            <div class="banner" style="background-image: url(images/banner/banner1.jpg)">
+                <h2>XƯỞNG TRANH SLOGAN</h2>
+                <b>Mang đến cho khách hàng những sản phẩm tuyêt vời nhất!</b>
+                <div id="search">
+                    <form th:action="@{search}" method="get" id="formIndex">
+                        <input type="text" placeholder="Tìm kiếm..." name="name" >
+                        <i class="ti-search"></i>
+                    </form>
+                </div>
+                <div>
+                    <a href="/shop" ><button id="button-secondary">Cửa hàng</button></a>
+                </div>
+            </div>
+
+            <div class="categories" id="categories">
+                <h4>DANH MỤC</h4>
+                <div class="list-category">
+                    <div th:id="${categoryD.name}" th:each="categoryD : ${categoryDetails}" class="cat-col">
+                        <a th:href="'/category/'+${categoryD.url}"><img th:src="@{'../../images/categories/'+${categoryD.image}}"/></a>
+                        <div class="cat-description">
+                            <b th:text="${categoryD.name}"></b>
+                            <ul>
+                                <li th:each="descrip : ${categoryD.description.split(',')}" th:text="${descrip}"></li>
+<!--                                <li>Truyền cảm hứng</li>-->
+<!--                                <li>Tăng tính sáng tạo</li>-->
+                            </ul>
+                            <a th:href="'/category/'+${categoryD.url}"><button class="button-outline">Mua ngay</button></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <p id="introduction"></p>
+            <div class="introduction" >
+                <div>
+                    <img src="images/icon/chatluong.svg">
+                    <h5>CHẤT LƯỢNG</h5>
+                    <p>Chất lượng luôn được Chungdenroi đặt lên hàng đầu đối với bất kỳ sản phẩm nào.</p>
+                </div>
+                <div>
+                    <img src="images/icon/low-price.svg">
+                    <h5>GIÁ TỐT</h5>
+                    <p>Mỗi sản phẩm của Chungdenroi đến tay khách hàng đều có giá tốt nhất, chất lượng nhất!</p>
+                </div>
+                <div>
+                    <img src="images/icon/reliable.svg">
+                    <h5>BẢO HÀNH</h5>
+                    <p>Sản phẩm tại Chungdenroi được bảo hành 5 năm(Sản phẩm lỗi 1 đổi 1 trong 7 ngày).</p>
+                </div>
+                    
+            </div>
+
+            <div class="products" >
+                <h4>SẢN PHẨM MỚI NHẤT</h4>
+                <div id="product_list">
+                    <div class="col-product" th:each="productDetail : ${productDetails}">
+                        <a th:href="@{${productDetail.url}}"><img th:src="@{'../../images/products/'+${productDetail.product.image}}"/></a>
+                        <div>
+                            <p class="product-category" th:text="${productDetail.product.category.name}"/>
+                            <p class="product-name" th:text="${productDetail.product.name}"/>
+                            <b class="product-price" th:text="${productDetail.product.price}"/>VND
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="blog" id="blog"></div>
+            <div class="service">
+                <div>
+                <img src="images/icon/free-delivery.png">
+                <br>                 
+                <b>Miễn phí vận chuyển tại Hà Nội</b>
+                </div>
+                <div>
+                    <img src="images/icon/exchange.png">
+                    <br>
+                    <b>Lỗi 1 đổi 1 trong 7 ngày</b>
+                </div>
+                <div>
+                    <img src="images/icon/support.png">
+                    <br>
+                    <b>Tư vấn, hỗ trợ nhiệt tình</b>
+                </div>
+                <div>
+                    <img src="images/icon/sale.png">
+                    <br>
+                    <b>Nhiều chương tình khuyến mãi</b>
+                </div>
+            </div>
+
+        </div>
+
+</body>
+
+
+
+<script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-showhidedashboard.js}"></script>
+
+
+<script type="text/javascript" th:src="@{/js/slider.js}"></script>
+
+
+
+
+
+</html>
